@@ -1,4 +1,5 @@
-#Getting Started
+## <a name="getting-started">🚀 Getting Started</a>
+
 # Clone the repository in terminal
 ```bash    
 gh repo clone zhixuan07/web-api
@@ -17,13 +18,22 @@ npm i
 cd client
 npm i
 ```
-# Move to upper directory level
-```bash
-cd ../ 
-```
+
 # To run client side
 ```bash
 cd client 
 npm run dev
 ```
-# Client Folder contian the Vue project structure
+
+### Extra Tips
+
+# To move upper directory level
+```bash
+cd ../
+```
+
+### Vue Docs
+<a href="https://vuejs.org/guide/introduction.html">Docs</a>
+<a href="https://learnvue.co/LearnVue-Vue-3-Cheatsheet.pdf">Cheat Sheet</a>
+<a href="https://www.youtube.com/watch?v=YrxBCBibVo0&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1 ">Tutorial</a>
+<a href=" https://github.com/zhixuan07/laravel-vue-project/tree/main/food"> Example Project</a>
