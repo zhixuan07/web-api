@@ -33,7 +33,7 @@ cd ../
 ```
 
 ### Vue Docs
-<a href="https://vuejs.org/guide/introduction.html">Docs</a>
-<a href="https://learnvue.co/LearnVue-Vue-3-Cheatsheet.pdf">Cheat Sheet</a>
-<a href="https://www.youtube.com/watch?v=YrxBCBibVo0&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1 ">Tutorial</a>
-<a href=" https://github.com/zhixuan07/laravel-vue-project/tree/main/food"> Example Project</a>
+-<a href="https://vuejs.org/guide/introduction.html">Docs</a>
+-<a href="https://learnvue.co/LearnVue-Vue-3-Cheatsheet.pdf">Cheat Sheet</a>
+-<a href="https://www.youtube.com/watch?v=YrxBCBibVo0&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1 ">Tutorial</a>
+-<a href=" https://github.com/zhixuan07/laravel-vue-project/tree/main/food"> Example Project</a>
