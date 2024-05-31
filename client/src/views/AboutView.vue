@@ -1,15 +1,26 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div>
+    <h1>{{ message }}</h1>
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      message: '',
+    };
+  },
+  mounted() {
+    axios.get('http://localhost:3000/api')
+      .then(response => {
+        this.message = response.data.message;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  },
+};
+</script>
