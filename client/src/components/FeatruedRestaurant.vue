@@ -9,7 +9,7 @@ const fetchKlRestaurants = async () => {
 loading.value = true // Set loading to true before making the request
   // Make the API request to fetch restaurants using the obtained location
   try {
-    const response = await axios.get(`http://localhost:3000/api/restaurants`, {
+    const response = await axios.get(`http://localhost:3001/api/restaurants`, {
       params: {
         latitude: '3.139',
         longitude: '101.6869',

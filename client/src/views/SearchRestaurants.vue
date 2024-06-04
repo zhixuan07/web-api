@@ -42,7 +42,7 @@ const fetchRestaurants = async () => {
     loading.value = true
     // Make the API request to fetch restaurants using the obtained location
     try {
-      const response = await axios.get(`http://localhost:3000/api/restaurants`, {
+      const response = await axios.get(`http://localhost:3001/api/restaurants`, {
         params: {
           latitude: location.value.latitude,
           longitude: location.value.longitude,
@@ -67,7 +67,7 @@ const fetchRestaurants = async () => {
   }
 }
 const getGeoCoder = async () => {
-  const response = await axios.get(`http://localhost:3000/api/geocode`, {
+  const response = await axios.get(`http://localhost:3001/api/geocode`, {
     params: {
       address: param
     }
