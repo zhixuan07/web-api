@@ -24,7 +24,8 @@ npm i
 cd client 
 npm run dev
 ```
-
+# Server port
+- User
 ### Extra Tips
 
 # To move upper directory level
