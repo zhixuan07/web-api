@@ -1,19 +1,23 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { computed } from 'vue'
 const useUser = useUserStore()
-const userInfo = ref(useUser.getUser)
-
-async function updateUser(){
-    useUser.updateUserInfo(userInfo.value)
+const userInfo = computed(() => useUser.getUser)
+const staticUsername = ref(userInfo.value.username);
+async function updateUser() {
+  useUser.updateUserInfo(userInfo.value)
 }
-
 </script>
 <template>
-  <div class="card w-96 bg-base-100 shadow-lg">
+  <div class="card w-96 bg-base-100 shadow-lg mx-auto">
     <div class="card-body">
       <h2 class="card-title">Profile</h2>
-      
+      <div class="avatar placeholder mx-auto my-10">
+        <div class="bg-neutral text-neutral-content rounded-full w-24">
+          <span class="text-3xl">{{ staticUsername }}</span>
+        </div>
+      </div>
       <label class="input input-bordered flex items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +32,7 @@ async function updateUser(){
             d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"
           />
         </svg>
-        <input type="text" class="grow" placeholder="Email" v-model="userInfo.email"/>
+        <input type="text" class="grow" placeholder="Email" v-model="userInfo.email" autocomplete="off" />
       </label>
       <label class="input input-bordered flex items-center gap-2">
         <svg
@@ -41,7 +45,7 @@ async function updateUser(){
             d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z"
           />
         </svg>
-        <input type="text" class="grow" placeholder="Username" v-model="userInfo.username" />
+        <input type="text" class="grow" placeholder="Username" v-model="userInfo.username" autocomplete="off"/>
       </label>
       <label class="input input-bordered flex items-center gap-2">
         <svg
@@ -56,12 +60,23 @@ async function updateUser(){
             clip-rule="evenodd"
           />
         </svg>
-        <input type="password" class="grow" v-model="userInfo.password" />
+        <input type="password" class="grow" v-model="userInfo.password" autocomplete="off" />
       </label>
-        <button class="btn btn-primary" @click="updateUser">Update</button>
-        <button class="btn btn-error">Delete Account</button>
+      <button class="btn btn-primary my-5" @click="updateUser">Update</button>
     </div>
   </div>
 </template>
+
+<style scoped>
+.card {
+  max-width: 24rem;
+  margin: auto;
+}
+
+.avatar.placeholder .text-3xl {
+  line-height: 6rem;
+}
+</style>
+
 
 <style lang="scss" scoped></style>

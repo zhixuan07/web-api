@@ -27,10 +27,10 @@ export const useBookmarksStore = defineStore('bookmarks', {
         console.error('Failed to fetch drinks', error);
       }
     },
-    async fetchRestaurants() {
+    async fetchRestaurants(uuid) {
       try {
-        const response = await axios.get('API_ENDPOINT_FOR_RESTAURANTS');
-        this.restaurants = response.data;
+        const response = await axios.get(`http://localhost:3001/api/favorite?uuid=${uuid}`);
+        return response.data;
       } catch (error) {
         console.error('Failed to fetch restaurants', error);
       }

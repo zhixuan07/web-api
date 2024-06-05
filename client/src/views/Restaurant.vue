@@ -13,13 +13,15 @@ const router = useRouter()
 
 
 ////////////// Function //////////////////////////////////////////////////////////
-
 const searchRestaurant = async () => {
   if(searchInput.value){
     await router.push({name: 'restaurants', params: {address: searchInput.value}})
   }else{
     alert('Please enter a address or city name to search for restaurants')
   }
+}
+const addToFavourite = () => {
+  alert('Added to Favourite')
 }
 
 </script>
@@ -47,12 +49,12 @@ const searchRestaurant = async () => {
         </div>
       
     </div>
-    <section class="p-10" >
+    <div class="p-10" >
         <RestaurantNearMe />
         <FeatruedRestaurant />
-    </section> 
+    </div> 
     
- 
+
    
 
 </template>

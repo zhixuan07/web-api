@@ -5,8 +5,9 @@ import RestaurantCard from './RestaurantCard.vue';
 const loading = ref(false)
 const klRestaurants = ref([])
 const errorMessage = ref('')
+
 const fetchKlRestaurants = async () => {
-loading.value = true // Set loading to true before making the request
+  loading.value = true// Set loading to true before making the request
   // Make the API request to fetch restaurants using the obtained location
   try {
     const response = await axios.get(`http://localhost:3001/api/restaurants`, {
@@ -33,6 +34,7 @@ loading.value = true // Set loading to true before making the request
 }
 onMounted(() => {
   fetchKlRestaurants()
+ 
 })
 </script>
 <template>
@@ -48,6 +50,7 @@ onMounted(() => {
         class="card w-1/5 bg-base-100 border"
       >
       <RestaurantCard
+          :location_id="restaurant.location_id"
           :name="restaurant.name"
           :rating="restaurant.rating"
           :address="restaurant.address"

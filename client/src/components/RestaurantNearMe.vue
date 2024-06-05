@@ -1,14 +1,14 @@
 <script setup>
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
-import RestaurantCard from './RestaurantCard.vue';
+import RestaurantCard from './RestaurantCard.vue'
 const restaurants = ref([])
 const location = ref(null)
 const errorMessage = ref('')
 const loading = ref(false)
 
 const getLocation = () => {
-loading.value = true
+  loading.value = true
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(onSuccess, onError)
   } else {
@@ -45,7 +45,6 @@ const onError = (error) => {
 
 const fetchRestaurants = async () => {
   if (location.value) {
-    
     // Make the API request to fetch restaurants using the obtained location
     try {
       const response = await axios.get(`http://localhost:3001/api/restaurants`, {
@@ -58,12 +57,11 @@ const fetchRestaurants = async () => {
           open_now: 'false',
           lunit: 'km',
           lang: 'en_US',
-          min_rating:'4'
+          min_rating: '4'
         }
       })
       restaurants.value = response.data.data
-      restaurants.value = restaurants.value.filter(restaurant => restaurant.name)
-      
+      restaurants.value = restaurants.value.filter((restaurant) => restaurant.name)
     } catch (error) {
       console.error(error)
       errorMessage.value = 'Failed to fetch restaurants'
@@ -72,7 +70,6 @@ const fetchRestaurants = async () => {
     }
   }
 }
-
 
 onMounted(() => {
   getLocation()
@@ -91,12 +88,11 @@ onMounted(() => {
         class="card w-1/5 bg-base-100 border"
       >
         <RestaurantCard
+          :location_id="restaurant.location_id"
           :name="restaurant.name"
-          :rating="restaurant.rating"
           :address="restaurant.address"
-          :image="restaurant.photo ? restaurant.photo.images.small.url : null"
-          :review="restaurant.num_reviews"
-          :align="'vertical'">
+          :align="'horizontal'"
+        >
         </RestaurantCard>
       </div>
     </div>

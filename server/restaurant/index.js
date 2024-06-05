@@ -3,6 +3,7 @@ const axios = require('axios');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const Restaurant = require('../schema/restaurant')
+const connectDB = require('../dbconn')
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -60,60 +61,74 @@ app.get('/api/restaurants', async (req, res) => {
   }
 });
 // Define a route to handle adding a favorite restaurant
-app.post('/api/favorites', (req, res) => {
-  const { uuid, name, location, } = req.body;
+app.post('/api/favorites', async (req, res) => {
+  const { uuid, location_id, name, address,phone, image_url,website} = req.body;
 
-  // Create a new restaurant instance
-  const restaurant = new Restaurant({
+  try {
+    // Check if a restaurant with the same location ID already exists
+    await connectDB();
+    const existingRestaurant = await Restaurant.findOne({ location_id });
+    if (existingRestaurant) {
+      return res.status(400).json({ error: 'Restaurant already exists' });
+    }
+
+    // Create a new restaurant instance
+    const restaurant = new Restaurant({
+      uuid,
+      location_id,
       name,
-      location,
-      userId,
-  });
-  // Check if a restaurant with the same location ID already exists
-  Restaurant.findOne({ location: location })
-      .then((existingRestaurant) => {
-          if (existingRestaurant) {
-              res.status(400).json({ error: 'Restaurant already exists' });
-          } else {
-              // Save the restaurant to MongoDB
-              restaurant.save()
-                  .then(() => {
-                      res.status(200).json({ message: 'Restaurant added as favorite' });
-                  })
-                  .catch((error) => {
-                      res.status(500).json({ error: 'Failed to add restaurant as favorite' });
-                  });
-          }
-      })
-      .catch((error) => {
-          res.status(500).json({ error: 'Failed to check for duplicate restaurant' });
-      });
+      address,
+      phone,
+      image_url,
+      website,
+    });
+
+    // Save the restaurant to MongoDB
+    await restaurant.save();
+    res.status(200).json({ message: 'Restaurant added as favorite' });
+
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 });
 
 // Define a route to handle getting all favorite restaurants
-app.get('/api/favorites', (req, res) => {
+app.get('/api/favorite',async (req, res) => {
+
+  const { uuid } = req.query;
   // Find all favorite restaurants
-  Restaurant.find()
-      .then((restaurants) => {
-          res.status(200).json(restaurants);
-      })
-      .catch((error) => {
-          res.status(500).json({ error: 'Failed to get favorite restaurants' });
-      });
+  if (!uuid) {
+    return res.status(400).json({ error: 'UUID is required' });
+  }
+  try{
+    await connectDB();
+    const restaurants = await Restaurant.find({ uuid });
+    res.status(200).json(restaurants);
+  }catch(error){
+    res.status(500).json({ error: 'Failed to get restaurants' });
+  }
 });
 
 // Define a route to handle deleting a favorite restaurant
-app.delete('/api/favorites/:id', (req, res) => {
-  const { location_id } = req.params;
+app.delete('/api/favorite', async(req, res) => {
+  const { location_id } = req.query;
+  if(!location_id){
+    return res.status(400).json({ error: 'Location ID is required' });
+  }
+  // Delete the restaurant from MongoDB
+  try{
+    await connectDB();
+    const restaurant = await Restaurant.findOneAndDelete({ location_id });
+    if (restaurant) {
+      return res.status(200).json({ message: 'Restaurant deleted' });
+    }else{
+      return res.status(404).json({ error: 'Restaurant not found' });
+    
+    }
+  }catch{
+    res.status(500).json({ error: 'Failed to delete restaurant' });
 
-  // Find the restaurant by ID and delete it
-  Restaurant.findByIdAndDelete(location_id)
-      .then(() => {
-          res.status(200).json({ message: 'Restaurant deleted successfully' });
-      })
-      .catch((error) => {
-          res.status(500).json({ error: 'Failed to delete restaurant' });
-      });
+  }
 });
 
 app.listen(PORT, () => {
