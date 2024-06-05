@@ -1,4 +1,8 @@
 ## <a name="getting-started">🚀 Getting Started</a>
+# Run the project include server and client side 
+```bash    
+npm run dev
+```
 
 # Clone the repository in terminal
 ```bash    
