@@ -1,9 +1,6 @@
 <script setup>
 ///////////////// Import Modules //////////////////////////////////////////////////////
-import { onMounted } from 'vue'
-import axios from 'axios'
 import { ref, reactive } from 'vue'
-import { computed } from '@vue/reactivity'
 import { useRouter } from 'vue-router'
 import FeatruedRestaurant from '@/components/FeatruedRestaurant.vue'
 import RestaurantNearMe from '@/components/RestaurantNearMe.vue'

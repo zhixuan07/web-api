@@ -2,8 +2,8 @@
 import StarRating from './StarRating.vue'
 import { useUserStore } from '@/stores/user'
 import axios from 'axios'
-import { response } from 'express';
-import res from 'express/lib/response';
+
+
 
 const props = defineProps({
   location_id: { type: String },

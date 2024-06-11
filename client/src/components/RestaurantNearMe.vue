@@ -91,7 +91,7 @@ onMounted(() => {
           :location_id="restaurant.location_id"
           :name="restaurant.name"
           :address="restaurant.address"
-          :align="'horizontal'"
+          :align="'vertical'"
         >
         </RestaurantCard>
       </div>
