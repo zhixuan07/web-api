@@ -2,8 +2,8 @@
 ///////////////// Import Modules //////////////////////////////////////////////////////
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import FeatruedRestaurant from '@/components/FeatruedRestaurant.vue'
-import RestaurantNearMe from '@/components/RestaurantNearMe.vue'
+import FeatruedRestaurant from '@/components/restaurant/FeatruedRestaurant.vue'
+import RestaurantNearMe from '@/components/restaurant/RestaurantNearMe.vue'
 ///////////////// Fucntion //////////////////////////////////////////////////////
 const searchInput = ref('')
 const router = useRouter()

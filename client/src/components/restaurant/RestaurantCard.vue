@@ -4,7 +4,6 @@ import { useUserStore } from '@/stores/user'
 import axios from 'axios'
 
 
-
 const props = defineProps({
   location_id: { type: String },
   name: { type: String },
@@ -13,7 +12,7 @@ const props = defineProps({
   image: { type: String },
   website: { type: String },
   rating: { type: String },
-  review: { type: String },
+  num_reviews: { type: String },
   css: { type: String },
   align: { type: String },
   deleteFavorite: { type: Boolean }
@@ -26,38 +25,40 @@ async function addToFavourite(restaurantProps) {
       alert('Please login to add to Favourite')
       return
     }
-    const response = await axios.post('http://localhost:3001/api/favorites', {
+    const response = await axios.post('http://localhost:3001/api/restaurant_favorite', {
       uuid: useUser.getUser.uuid,
       location_id: restaurantProps.location_id,
       name: restaurantProps.name,
       address: restaurantProps.address,
-      phone: props.phone,
-      image_url: props.image,
-      website: props.website,
-      rating: props.rating,
-      review: props.review
+      phone: restaurantProps.phone,
+      image_url: restaurantProps.image,
+      website: restaurantProps.website,
+      rating: restaurantProps.rating,
+      num_reviews: restaurantProps.review
     })
     if (response.status === 200) {
       alert('Added to Favourite')
-    } else if (response.status === 400) {
-      alert('Already in Favourite')
     }
   } catch (error) {
-    alert('Failed to add to Favourite')
-  }
-}
+    if (error.response.status === 400) {
+      alert('Already in Bookmark')
+    } else {
+      alert('Failed to add to Favourite')
+    
+    }
+}}
 
 async function deleteFavorite(restaurantProps) {
   try {
-    const response = await axios.delete(`http://localhost:3001/api/favorite?location_id=${restaurantProps.location_id}`)
+    const response = await axios.delete(`http://localhost:3001/api/restaurant_favorite?location_id=${restaurantProps.location_id}`)
     if (response.status === 200) {
       alert(response.data.message)
     }else{
       alert(response.data.error)
     }
+    window.location.reload()
   } catch (error) {
-
-    alert(response.data.error)
+    alert('Failed to delete from Favourite')
   }
 }
 </script>
@@ -82,7 +83,7 @@ async function deleteFavorite(restaurantProps) {
       <div class="flex flex-col gap-2 relative w-full">
         <h1 class="text-2xl font-bold pl-2">{{ props.name }}</h1>
         <div class="flex flex-row gap-2 items-center pl-2" v-if="props.rating">
-          <StarRating :rating="props.rating" />
+          <StarRating :rating="props.rating" :review="props.num_reviews" />
           <p class="text-gray-500 text-sm">{{ props.rating }}</p>
         </div>
         <div class="flex flex-row gap-2 items-center pl-2" v-else>
@@ -212,7 +213,10 @@ async function deleteFavorite(restaurantProps) {
     </figure>
     <div class="card-body">
       <h2 class="card-title">{{ props.name }}</h2>
-      <StarRating :rating="props.rating" :review="props.review" />
+      <p class="text-gray-500">{{ props.address }}</p>
+      <p class="text-gray-500">{{ props.phone }}</p>
+      <StarRating :rating="props.rating" :review="props.num_reviews" />
+      
     </div>
   </div>
 </template>
