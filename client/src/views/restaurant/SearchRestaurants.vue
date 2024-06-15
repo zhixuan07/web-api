@@ -2,7 +2,8 @@
 import axios from 'axios'
 import { onMounted, ref } from 'vue'
 import { useRouter,useRoute } from 'vue-router';
-import RelatedRestaurants from '@/components/RelatedRestaurants.vue'
+import RelatedRestaurants from '@/components/restaurant/RelatedRestaurants.vue'
+
 const location = ref(null)
 const restaurants = ref()
 const route = useRoute()

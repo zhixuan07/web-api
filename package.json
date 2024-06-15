@@ -8,7 +8,9 @@
     "restaurant": "node server/restaurant/index.js",
     "user": "node server/user/index.js",
     "client": "cd client && npm run dev",
-    "dev": "concurrently \"npm run restaurant\" \"npm run client\" \"npm run user\""
+    "recipe": "node server/recipe/index.js",
+    "drink": "node server/drink/index.js",
+    "dev": "concurrently \"npm run restaurant\" \"npm run client\" \"npm run user\" \"npm run recipe\" \"npm run drink\""
   },
   "keywords": [],
   "author": "",

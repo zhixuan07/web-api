@@ -9,9 +9,6 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     },
 
@@ -40,27 +37,27 @@ const router = createRouter({
         {
           path: '/restaurant',
           name: 'restaurant',
-          component: () => import('../views/Restaurant.vue')
+          component: () => import('../views/restaurant/Restaurant.vue')
         },
         {
           path: '/restaurants/:address',
           name: 'restaurants',
-          component: () => import('../views/SearchRestaurants.vue')
+          component: () => import('../views/restaurant/SearchRestaurants.vue')
         },
         {
           path: '/recipe',
           name: 'recipe',
-          component: () => import('../views/Recipe.vue')
+          component: () => import('../views/recipe/Recipe.vue')
         },
         {
           path: '/drink',
           name: 'drink',
-          component: () => import('../views/Drink.vue')
+          component: () => import('../views/drink/Drink.vue')
         },
         {
           path: '/nutrition',
           name: 'nutrition',
-          component: () => import('../views/Nutrition.vue')
+          component: () => import('../views/nutrition/Nutrition.vue')
         },
         {
           path: '/bookmarks',
@@ -71,6 +68,16 @@ const router = createRouter({
           path: '/profile',
           name: 'profile',
           component: () => import('../views/Profile.vue'),
+        },
+        {
+          path:'recipes/:name',
+          name: 'recipes',
+          component: () => import('../views/recipe/SearchRecipes.vue')
+        },
+        {
+          path:'drinks/:name',
+          name: 'drinks',
+          component: () => import('../views/drink/SearchDrinks.vue')
         }
         
       ]

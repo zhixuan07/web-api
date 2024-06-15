@@ -90,8 +90,12 @@ onMounted(() => {
         <RestaurantCard
           :location_id="restaurant.location_id"
           :name="restaurant.name"
+          :rating="restaurant.rating"
           :address="restaurant.address"
-          :align="'horizontal'"
+          :image="restaurant.photo ? restaurant.photo.images.small.url : null"
+          :num_reviews="restaurant.num_reviews"
+          :phone="restaurant.phone"
+          :align="'vertical'"
         >
         </RestaurantCard>
       </div>
@@ -99,4 +103,5 @@ onMounted(() => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

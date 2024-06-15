@@ -5,11 +5,11 @@ const restaurantSchema = new moogose.Schema({
     location_id: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     address: { type: String},
-    //rating: { type: String},
-    //num_reviews: { type: String,},
-    //image_url: { type: String},
-    //phone: { type: String},
-    //website: { type: String},
+    rating: { type: String},
+    num_reviews: { type: String,},
+    image_url: { type: String},
+    phone: { type: String},
+    website: { type: String},
 
 })
 

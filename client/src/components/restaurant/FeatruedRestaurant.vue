@@ -54,8 +54,9 @@ onMounted(() => {
           :name="restaurant.name"
           :rating="restaurant.rating"
           :address="restaurant.address"
+          :phone="restaurant.phone"
           :image="restaurant.photo ? restaurant.photo.images.small.url : null"
-          :review="restaurant.num_reviews"
+          :num_reviews="restaurant.num_reviews"
           :align="'vertical'">
         </RestaurantCard>
       </div>
