@@ -1,4 +1,8 @@
 ## <a name="getting-started">🚀 Getting Started</a>
+# Run the project include server and client side 
+```bash    
+npm run dev
+```
 
 # Clone the repository in terminal
 ```bash    
@@ -24,7 +28,8 @@ npm i
 cd client 
 npm run dev
 ```
-
+# Server port
+- User
 ### Extra Tips
 
 # To move upper directory level
