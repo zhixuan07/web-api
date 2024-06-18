@@ -25,7 +25,7 @@ async function addToFavourite(restaurantProps) {
       alert('Please login to add to Favourite')
       return
     }
-    const response = await axios.post('http://localhost:3001/api/restaurant_favorite', {
+    const response = await axios.post('http://localhost:3001/api/restaurant_favourite', {
       uuid: useUser.getUser.uuid,
       location_id: restaurantProps.location_id,
       name: restaurantProps.name,
@@ -50,7 +50,7 @@ async function addToFavourite(restaurantProps) {
 
 async function deleteFavorite(restaurantProps) {
   try {
-    const response = await axios.delete(`http://localhost:3001/api/restaurant_favorite?location_id=${restaurantProps.location_id}`)
+    const response = await axios.delete(`http://localhost:3001/api/restaurant_favourite?location_id=${restaurantProps.location_id}&uuid=${useUser.getUser.uuid}`)
     if (response.status === 200) {
       alert(response.data.message)
     }else{
@@ -58,7 +58,7 @@ async function deleteFavorite(restaurantProps) {
     }
     window.location.reload()
   } catch (error) {
-    alert('Failed to delete from Favourite')
+   alert(error.response.data.error)
   }
 }
 </script>

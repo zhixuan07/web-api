@@ -67,14 +67,15 @@ app.get("/api/restaurants", async (req, res) => {
   }
 });
 
-// Define a route to handle adding a favorite restaurant
-app.post("/api/restaurant_favorite", async (req, res) => {
+// Define a route to handle adding a favourite restaurant
+app.post("/api/restaurant_favourite", async (req, res) => {
   const { uuid, location_id, name, address, phone, image_url, website, rating,num_reviews} = req.body;
 
   try {
     // Check if a restaurant with the same location ID already exists
     await connectDB();
-    const existingRestaurant = await Restaurant.findOne({ location_id });
+    
+    const existingRestaurant = await Restaurant.findOne({ location_id ,uuid});
     if (existingRestaurant) {
       return res.status(400).json({ error: "Restaurant already exists" });
     } else {
@@ -101,7 +102,7 @@ app.post("/api/restaurant_favorite", async (req, res) => {
 });
 
 // Define a route to handle getting all favorite restaurants
-app.get("/api/restaurant_favorites", async (req, res) => {
+app.get("/api/restaurant_favourites", async (req, res) => {
   const { uuid } = req.query;
   // Find all favorite restaurants
   if (!uuid) {
@@ -109,23 +110,38 @@ app.get("/api/restaurant_favorites", async (req, res) => {
   }
   try {
     await connectDB();
+   
     const restaurants = await Restaurant.find({ uuid });
-    res.status(200).json(restaurants);
+    if(restaurants.length === 0){
+      return res.status(404).json({ error: "No favorite restaurants found" });
+    }else{
+      res.status(200).json(restaurants);
+    }
+   
+
   } catch (error) {
     res.status(500).json({ error: "Failed to get restaurants" });
   }
 });
 
 // Define a route to handle deleting a favorite restaurant
-app.delete("/api/restaurant_favorite", async (req, res) => {
-  const { location_id } = req.query;
+app.delete("/api/restaurant_favourite", async (req, res) => {
+  const { uuid,location_id } = req.query;
   if (!location_id) {
     return res.status(400).json({ error: "Location ID is required" });
+  }else if(!uuid){
+    return res.status(400).json({ error: "UUID is required" });
   }
   // Delete the restaurant from MongoDB
   try {
     await connectDB();
-    const restaurant = await Restaurant.findOneAndDelete({ location_id });
+    const uuidExists = await Restaurant.exists({ uuid });
+
+    if (!uuidExists) {
+      return res.status(404).json({ error: "UUID not found" });
+    }
+
+    const restaurant = await Restaurant.findOneAndDelete({ location_id, uuid});
     if (restaurant) {
       return res.status(200).json({ message: "Restaurant deleted" });
     } else {
