@@ -32,7 +32,7 @@ async function login(ev) {
 </script>
 
 <template>
-    <div class="bg-white shadow-xl rounded px-8 py-7 pt-4 pb-8 w-80">
+    <div class="bg-white shadow-xl rounded px-8 py-7 pt-4 pb-8 w-80 mx-auto">
       <form @submit="login">
         <div class="mb-7 flex justify-center">
           <h1

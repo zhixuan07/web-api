@@ -20,26 +20,24 @@ const setTab = async (tab) => {
   activeTab.value = tab;
   switch (tab) {
     case 'recipes':
-      const recipes_response = await axios.get(`http://localhost:3004/api/recipe_favorites?uuid=${userStore.getUser.uuid}`);
+      const recipes_response = await axios.get(`http://localhost:3004/api/recipe_favourites?uuid=${userStore.getUser.uuid}`);
       recipes.value = recipes_response.data;
       break;
     case 'drinks':
-      const drinks_response = await axios.get(`http://localhost:3003/api/drink_favorites?uuid=${userStore.getUser.uuid}`);
+      const drinks_response = await axios.get(`http://localhost:3003/api/drink_favourites?uuid=${userStore.getUser.uuid}`);
       drinks.value = drinks_response.data;
       break;
     case 'restaurants':
-     const restaurants_response = await axios.get(`http://localhost:3001/api/restaurant_favorites?uuid=${userStore.getUser.uuid}`);
+     const restaurants_response = await axios.get(`http://localhost:3001/api/restaurant_favourites?uuid=${userStore.getUser.uuid}`);
       restaurants.value = restaurants_response.data;
       break;
-    case 'nutrition':
-      fetchNutrition();
-      break;
+    
   }
 };
 
 
 onMounted(async() => {
-  const recipes_response = await axios.get(`http://localhost:3004/api/recipe_favorites?uuid=${userStore.getUser.uuid}`);
+  const recipes_response = await axios.get(`http://localhost:3004/api/recipe_favourites?uuid=${userStore.getUser.uuid}`);
       recipes.value = recipes_response.data;
 });
 </script>
@@ -56,23 +54,29 @@ onMounted(async() => {
         <!---------------------------------------------------------------------->
         <div v-if="activeTab === 'recipes'">
           <h2 class="text-2xl font-bold mb-4">Recipes</h2>
-          <div v-for="recipe in recipes" :key="recipe.idMeal" class="grid grid-row-3 gap-4">
+          <div v-if="recipes" v-for="recipe in recipes" :key="recipe.idMeal" class="grid grid-row-3 gap-4">
             <RecipeCard
               :recipe="recipe"
               :deleteFavorite="true"
               :align="'horizontal'"
             />
           </div>
+          <div v-else>
+            <h1> No recipe saved</h1>
+          </div>
         </div>
         <!---------------------------------------------------------------------->
         <div v-if="activeTab === 'drinks'">
           <h2 class="text-2xl font-bold mb-4">Drinks</h2>
-          <div v-for="drink in drinks" :key="drink.idDrink" class="grid grid-row-3 gap-4">
+          <div v-if="drinks" v-for="drink in drinks" :key="drink.idDrink" class="grid grid-row-3 gap-4">
             <DrinkCard
               :drink="drink"
               :deleteFavorite="true"
               :align="'horizontal'"
             />
+        </div>
+        <div v-else>
+          <h1> No drink saved</h1>
         </div>
       </div>
       <!---------------------------------------------------------------------->
@@ -91,16 +95,9 @@ onMounted(async() => {
               :deleteFavorite="true"
               />
           </div>
-          <div  v-else>
+          <div v-else-if="restaurants ==null">
             <h1> No restaurant saved</h1>
           </div>
-        </div>
-        <!---------------------------------------------------------------------->
-        <div v-if="activeTab === 'nutrition'">
-          <h2 class="text-2xl font-bold mb-4">Nutrition Information</h2>
-          <ul class="list-disc list-inside">
-            <li v-for="info in nutrition" :key="info.id">{{ info.name }}</li>
-          </ul>
         </div>
       
     </div>

@@ -31,7 +31,7 @@ async function register (ev){
 
 </script>
 <template>
-  <div class="bg-white shadow-md  rounded px-8 py-5 pt-4 pb-5 w-80 sm:p-12 ">
+  <div class="bg-white shadow-md  rounded px-8 py-5 pt-4 pb-5 w-80 sm:p-12 mx-auto">
     <form @submit.prevent="register">
       <div class="mb-7 flex justify-center">
         <h1
@@ -41,7 +41,7 @@ async function register (ev){
         </h1>
       </div>
       <div class="mb-3">
-        <label class="block mb-2 sm:text-sm">First Name</label>
+        <label class="block mb-2 sm:text-sm">Name</label>
         <input
           class="rounded shadow appearance-none border px-2 py-2 w-full"
           type="text"
