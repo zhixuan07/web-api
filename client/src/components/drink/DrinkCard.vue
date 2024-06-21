@@ -54,8 +54,9 @@ async function deleteFavorite(props) {
   try {
     const response = await axios.delete(`http://localhost:3003/api/drink_favourite`, {
       params: {
-        idMeal: props.drink.idDrink,
-        uuid: useUser.getUser.uuid
+        uuid: useUser.getUser.uuid,
+        idDrink: props.drink.idDrink
+        
       }
     })
 
@@ -68,7 +69,7 @@ async function deleteFavorite(props) {
     alert('Failed to delete')
     console.error('Error deleting favorite:', error)
   }
-  window.location.reload()
+  
 }
 </script>
 
