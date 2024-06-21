@@ -63,7 +63,12 @@ app.get('/api/recipe_favourites',async (req, res) => {
   try{
     await connectDB();
     const recipes = await Recipe.find({ uuid });
-    res.status(200).json(recipes);
+    if (!recipes.length) {
+      return res.status(404).json({ error: 'No recipes found' });
+    }else{
+      res.status(200).json(recipes);
+    }
+    
   }catch(error){
     res.status(500).json({ error: 'Failed to get recipes' });
   }

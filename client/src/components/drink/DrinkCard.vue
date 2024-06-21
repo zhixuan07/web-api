@@ -69,7 +69,7 @@ async function deleteFavorite(props) {
     alert('Failed to delete')
     console.error('Error deleting favorite:', error)
   }
-  
+  window.location.reload()
 }
 </script>
 
