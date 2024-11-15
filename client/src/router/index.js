@@ -1,89 +1,54 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    
-    {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
-    },
-
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('../views/Register.vue')
-    },
-
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/Login.vue')
-    },
     {
       path: '/',
-      redirect: '/home',
-      component: () => import('../components/DefaultLayout.vue'),
+      redirect: '/admin/login',
+      name: 'auth',
+      component: () => import('../components/Pet/AuthLayout.vue'),
+      meta: { isGuest: true },
+      children: [
+        {
+          path: '/admin/login',
+          name: 'AdminLogin',
+          component: () => import('../views/Pet/admin/Login.vue')
+        }
+      ]
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('../components/Pet/AdminLayout.vue'),
       meta: { requiresAuth: true },
       children: [
         {
-          path: '/',
-          name: 'home',
-          component: HomeView
+          path: '/admin/products',
+          name: 'Products',
+          component: () => import('../views/Pet/admin/Products.vue'),
+
         },
         {
-          path: '/restaurant',
-          name: 'restaurant',
-          component: () => import('../views/restaurant/Restaurant.vue')
-        },
-        {
-          path: '/restaurants/:address',
-          name: 'restaurants',
-          component: () => import('../views/restaurant/SearchRestaurants.vue')
-        },
-        {
-          path: '/recipe',
-          name: 'recipe',
-          component: () => import('../views/recipe/Recipe.vue')
-        },
-        {
-          path: '/drink',
-          name: 'drink',
-          component: () => import('../views/drink/Drink.vue')
-        },
-        {
-          path: '/nutrition',
-          name: 'nutrition',
-          component: () => import('../views/nutrition/Nutrition.vue')
-        },
-        {
-          path: '/bookmarks',
-          name: 'bookmarks',
-          component: () => import('../views/BookMarks.vue')
-        },
-        {
-          path: '/profile',
-          name: 'profile',
-          component: () => import('../views/Profile.vue'),
-        },
-        {
-          path:'recipes/:name',
-          name: 'recipes',
-          component: () => import('../views/recipe/SearchRecipes.vue')
-        },
-        {
-          path:'drinks/:name',
-          name: 'drinks',
-          component: () => import('../views/drink/SearchDrinks.vue')
+          path:'/admin/appointments',
+          name:'Appointments',
+          component:()=>import('../views/Pet/admin/Appointments.vue')
         }
-        
       ]
     }
   ]
 })
 
-
+router.beforeEach((to, from, next) => {
+  const userToken = localStorage.getItem('token');
+  if (to.meta.requiresAuth && !userToken) {
+  
+    alert('You must be logged in to access this page');
+    next({ path: '/admin/login' });
+  } else if (to.meta.isGuest && userToken) {
+    next({ path: '/admin/products' }); 
+  }else {
+    next();
+  }
+});
 export default router
