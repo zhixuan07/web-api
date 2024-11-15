@@ -63,12 +63,7 @@ app.get('/api/drink_favourites',async (req, res) => {
   try{
     await connectDB();
     const drinks = await Drink.find({ uuid });
-    if(!drinks.length){
-      return res.status(404).json({ error: 'No favorite drinks found' });
-    }else{
-      res.status(200).json(drinks);
-    }
-    
+    res.status(200).json(drinks);
   }catch(error){
     res.status(500).json({ error: 'Failed to get drinks' });
   }
@@ -134,5 +129,4 @@ app.delete('/api/drink_favourite', async(req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
-  
 });
