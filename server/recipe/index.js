@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
+const axios = require('axios');
 const app = express();
 const port = 3004;
 const connectDB = require('../dbconn')
@@ -63,7 +64,10 @@ app.get('/api/recipe_favourites',async (req, res) => {
   try{
     await connectDB();
     const recipes = await Recipe.find({ uuid });
-    res.status(200).json(recipes);
+   
+      res.status(200).json(recipes);
+    
+    
   }catch(error){
     res.status(500).json({ error: 'Failed to get recipes' });
   }
